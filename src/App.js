@@ -3,7 +3,9 @@ import {useRef, useState} from 'react'
 
 function App() {
   const inputRef=useRef();
-  const [items,setItems]=useState([])
+  const [items,setItems]=useState([]);
+  const [query,setQuery]=useState('');
+  const filteredItems=items.filter((item)=>item.toLowerCase().includes(query.toLowerCase()))
   function submitHandler(e){
     e.preventDefault();
     const value=inputRef.current.value;
@@ -17,13 +19,13 @@ function App() {
   }
   return (
     <>
-    Search<input type="search"/>
+    Search<input type="search" onChange={(e)=>{setQuery(e.target.value)}}/>
     <form onSubmit={submitHandler}>
-    <input type="text" ref={inputRef}/> 
+    <input type="text" ref={inputRef} /> 
     <button type="submit">Add items</button>
     </form> 
     {
-      items.map((item,index)=>{
+      filteredItems.map((item,index)=>{
         return <div key={index} >{item}</div>
       })
     }
