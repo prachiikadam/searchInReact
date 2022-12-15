@@ -1,11 +1,15 @@
-import './App.css';
+
 import {useRef, useState} from 'react'
 import { Routes,Route, Link, Outlet } from 'react-router-dom';
+import React ,{Suspense}from 'react';
+//import Home from './components/Home';
+//import About from './components/About';
+//import Store from './components/Store';
 
+const Home=React.lazy(()=>import('./components/Home'))
+const About=React.lazy(()=>import('./components/About'))
+const Store=React.lazy(()=>import('./components/Store').then((module)=>{return {default :module.Store}}))
 
-import Home from './components/Home';
-import About from './components/About';
-import Store from './components/Store';
 function App() {
   const inputRef=useRef();
   const [items,setItems]=useState([]);
@@ -55,7 +59,9 @@ function NavWrapper(){
     <Link to='/store'>Store</Link>
     <Link to='/about'>About</Link>
   </nav>
+  <Suspense fallback={<h1>Loading......</h1>}>
   <Outlet/>
+  </Suspense>
   </>
   )
 }

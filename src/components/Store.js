@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Store() {
+export function Store() {
   return (
     <div>Store</div>
   )
